@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+*.local
+.vercel
+.DS_Store
+
+# local QA screenshot helpers (reference an out-of-repo Playwright install)
+shot.mjs
+scroll-shot.mjs
+
+.vercel

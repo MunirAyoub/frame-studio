@@ -1,0 +1,88 @@
+:root {
+  /* Optical-glass light page + one warm metal accent (aviator gold).
+     Deliberately NOT cream/serif/terracotta — cool grey, grotesk, mono specs. */
+  --paper: #e7e8e4;
+  --paper-2: #eeefec;
+  --ink: #191817;
+  --ink-soft: #565550;
+  --ink-faint: #8b8a84;
+  --line: rgba(25, 24, 23, 0.14);
+  --line-soft: rgba(25, 24, 23, 0.08);
+  --gold: #c79a4b;
+  --gold-deep: #a67c30;
+  --stage: #14161a;
+  --stage-2: #0c0d10;
+
+  --display: 'Archivo Expanded', 'Archivo', system-ui, sans-serif;
+  --body: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  color-scheme: light;
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--body);
+}
+
+canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* utility: mono spec label */
+.mono {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
