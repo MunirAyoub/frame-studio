@@ -69,12 +69,13 @@ export default function Glasses({
     const rimCurve = new THREE.CatmullRomCurve3(pts3d, true, 'catmullrom', 0.0)
     const rim = new THREE.TubeGeometry(rimCurve, 220, RIM_R, 12, true)
 
-    // Temple arm: hinged at the lens's outer-top corner (root space), running
-    // straight back, then bending down at the ear.
+    // Temple arm: hinged at the lens's outer-top corner — which, because the
+    // lens wraps, sits *behind* the front plane (–z) — then running straight
+    // back and bending down at the ear.
     const armCurve = new THREE.CatmullRomCurve3(
       [
-        new THREE.Vector3(0.9, 0.26, 0.05),
-        new THREE.Vector3(0.97, 0.25, -0.12),
+        new THREE.Vector3(0.9, 0.26, -0.05),
+        new THREE.Vector3(0.96, 0.25, -0.2),
         new THREE.Vector3(0.99, 0.24, -0.7),
         new THREE.Vector3(0.98, 0.22, -1.15),
         new THREE.Vector3(0.95, 0.1, -1.4),
@@ -194,7 +195,7 @@ export default function Glasses({
       {[-1, 1].map((s) => (
         <group key={s} scale={[s, 1, 1]}>
           <mesh geometry={armGeo} castShadow>{metal()}</mesh>
-          <mesh position={[0.9, 0.26, 0.05]}>
+          <mesh position={[0.9, 0.26, -0.05]}>
             <boxGeometry args={[0.05, 0.05, 0.06]} />
             {metal()}
           </mesh>
