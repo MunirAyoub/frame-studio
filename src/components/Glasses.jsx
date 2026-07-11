@@ -53,12 +53,14 @@ export default function Glasses({
     const lens = new THREE.ExtrudeGeometry(shape, {
       depth: 0.05,
       bevelEnabled: true,
-      bevelThickness: 0.03,
-      bevelSize: 0.03,
+      bevelThickness: 0.02,
+      bevelSize: 0.02,
       bevelSegments: 3,
       curveSegments: 48,
     })
-    lens.center()
+    // Centre only the *thickness* on the rim plane (z≈0). Do NOT use .center():
+    // recentring x/y shifts the lens off the rim and exposes the bottom edge.
+    lens.translate(0, 0, -0.025)
 
     // Rim: a tube swept along the very same outline, so it hugs the lens.
     const pts2d = shape.getPoints(160)
