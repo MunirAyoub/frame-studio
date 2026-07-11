@@ -46,7 +46,7 @@ export default function Glasses({
   const root = useRef(null)
 
   // --- Geometry (built once) ------------------------------------------------
-  const { lensGeo, rimGeo, armGeo } = useMemo(() => {
+  const { lensGeo, rimGeo, armGeo, padArmGeo } = useMemo(() => {
     const shape = lensShape()
 
     // Lens: the outline extruded to a thin, bevelled disc.
@@ -86,7 +86,25 @@ export default function Glasses({
     )
     const arm = new THREE.TubeGeometry(armCurve, 90, ARM_R, 10, false)
 
-    return { lensGeo: lens, rimGeo: rim, armGeo: arm }
+    // Nose-pad arm: a thin wire off the lower-inner rim, reaching down to the pad.
+    const padArm = new THREE.TubeGeometry(
+      new THREE.CatmullRomCurve3(
+        [
+          new THREE.Vector3(0.14, -0.13, 0.045), // on the inner rim
+          new THREE.Vector3(0.09, -0.19, 0.09),
+          new THREE.Vector3(0.055, -0.23, 0.12), // down to the pad
+        ],
+        false,
+        'catmullrom',
+        0.4,
+      ),
+      28,
+      0.007,
+      8,
+      false,
+    )
+
+    return { lensGeo: lens, rimGeo: rim, armGeo: arm, padArmGeo: padArm }
   }, [])
 
   // --- Materials (props reconciled by R3F on every render) ------------------
@@ -146,19 +164,23 @@ export default function Glasses({
         </mesh>
       ))}
 
-      {/* nose pads — small, translucent, tucked at the inner-bottom of each rim */}
+      {/* nose pads — a wire pad-arm off each rim ending in a silicone pad */}
       {[-1, 1].map((s) => (
-        <mesh key={s} position={[s * 0.055, -0.12, 0.09]} rotation={[0.45, 0, s * 0.55]}>
-          <capsuleGeometry args={[0.013, 0.045, 4, 12]} />
-          <meshPhysicalMaterial
-            color="#c9c7c3"
-            roughness={0.3}
-            transmission={0.5}
-            thickness={0.1}
-            transparent
-            opacity={0.5}
-          />
-        </mesh>
+        <group key={s} scale={[s, 1, 1]}>
+          <mesh geometry={padArmGeo} castShadow>{metal()}</mesh>
+          <mesh position={[0.05, -0.24, 0.13]} rotation={[0.25, -0.3, -0.35]}>
+            <capsuleGeometry args={[0.016, 0.03, 6, 16]} />
+            <meshPhysicalMaterial
+              color="#eceae6"
+              roughness={0.25}
+              transmission={0.55}
+              thickness={0.15}
+              ior={1.4}
+              transparent
+              opacity={0.75}
+            />
+          </mesh>
+        </group>
       ))}
 
       {/* temple arms + a small hinge nub where they meet the rim */}
