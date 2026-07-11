@@ -431,8 +431,11 @@ export default function App() {
           Let's build your frame in 3D.
         </h2>
         <div className="contact reveal">
-          <a className="btn solid" href="mailto:munirjmayoub@gmail.com?subject=3D%20eyewear%20viewer">
-            munirjmayoub@gmail.com
+          <a
+            className="btn solid"
+            href="mailto:munirjmayoub.jobs@gmail.com?subject=3D%20eyewear%20viewer"
+          >
+            munirjmayoub.jobs@gmail.com
           </a>
           <a className="btn line" href="#viewer">
             Back to the viewer
