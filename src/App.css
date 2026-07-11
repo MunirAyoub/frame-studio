@@ -564,6 +564,27 @@
   }
 }
 
+/* On phones the controls must sit BELOW the frame, not on top of it:
+   give the canvas its own height and let the panel flow underneath. */
+@media (max-width: 700px) {
+  .stage-card {
+    min-height: 0;
+  }
+  .stage-canvas {
+    position: relative;
+    flex: none;
+    height: 52vh;
+  }
+  .overlay {
+    bottom: auto;
+    height: 52vh;
+  }
+  .stage-controls {
+    position: relative;
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 540px) {
   .stage-controls {
     gap: 16px 20px;
