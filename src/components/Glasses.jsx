@@ -86,13 +86,14 @@ export default function Glasses({
     )
     const arm = new THREE.TubeGeometry(armCurve, 90, ARM_R, 10, false)
 
-    // Nose-pad arm: a thin wire off the lower-inner rim, reaching down to the pad.
+    // Nose-pad arm: a thin wire off the lower-inner rim, reaching down and
+    // *back* toward the face (–z), where the pad rests against the nose.
     const padArm = new THREE.TubeGeometry(
       new THREE.CatmullRomCurve3(
         [
-          new THREE.Vector3(0.14, -0.13, 0.045), // on the inner rim
-          new THREE.Vector3(0.09, -0.19, 0.09),
-          new THREE.Vector3(0.055, -0.23, 0.12), // down to the pad
+          new THREE.Vector3(0.145, -0.12, 0.02), // on the inner rim, near the front
+          new THREE.Vector3(0.1, -0.18, -0.03),
+          new THREE.Vector3(0.065, -0.23, -0.07), // down and back to the pad
         ],
         false,
         'catmullrom',
@@ -168,8 +169,14 @@ export default function Glasses({
       {[-1, 1].map((s) => (
         <group key={s} scale={[s, 1, 1]}>
           <mesh geometry={padArmGeo} castShadow>{metal()}</mesh>
-          <mesh position={[0.05, -0.24, 0.13]} rotation={[0.25, -0.3, -0.35]}>
-            <capsuleGeometry args={[0.016, 0.03, 6, 16]} />
+          {/* silicone pad: long axis runs down the nose, flat face turned inward,
+              leaning inward at the bottom — resting behind the frame plane */}
+          <mesh
+            position={[0.06, -0.245, -0.075]}
+            rotation={[0.1, 0.5, -0.32]}
+            scale={[1, 1, 0.45]}
+          >
+            <capsuleGeometry args={[0.019, 0.032, 6, 16]} />
             <meshPhysicalMaterial
               color="#eceae6"
               roughness={0.25}
